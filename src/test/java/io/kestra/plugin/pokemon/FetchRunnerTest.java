@@ -1,4 +1,4 @@
-package io.kestra.plugin.templates;
+package io.kestra.plugin.pokemon;
 
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,7 @@ import static org.hamcrest.Matchers.is;
  * test to configure in-memory runner.
  */
 @MicronautTest
-class ExampleRunnerTest {
+class FetchRunnerTest {
     @Inject
     protected MemoryRunner runner;
 
@@ -38,16 +38,15 @@ class ExampleRunnerTest {
 
     @BeforeEach
     protected void init() throws IOException, URISyntaxException {
-        repositoryLoader.load(Objects.requireNonNull(ExampleRunnerTest.class.getClassLoader().getResource("flows")));
+        repositoryLoader.load(Objects.requireNonNull(FetchRunnerTest.class.getClassLoader().getResource("flows")));
         this.runner.run();
     }
 
     @SuppressWarnings("unchecked")
     @Test
     void flow() throws TimeoutException {
-        Execution execution = runnerUtils.runOne(null, "io.kestra.templates", "example");
+        Execution execution = runnerUtils.runOne(null, "io.kestra.plugin", "pokemonFetch");
 
-        assertThat(execution.getTaskRunList(), hasSize(3));
-        assertThat(((Map<String, Object>)execution.getTaskRunList().get(2).getOutputs().get("child")).get("value"), is("task-id"));
+        assertThat(execution.getTaskRunList(), hasSize(2));
     }
 }

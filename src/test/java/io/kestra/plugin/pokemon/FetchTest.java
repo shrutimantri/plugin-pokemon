@@ -1,4 +1,4 @@
-package io.kestra.plugin.templates;
+package io.kestra.plugin.pokemon;
 
 import com.google.common.collect.ImmutableMap;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -17,20 +17,22 @@ import static org.hamcrest.Matchers.is;
  * parameters to your task and test the returning behaviour easily.
  */
 @MicronautTest
-class ExampleTest {
+class FetchTest {
     @Inject
     private RunContextFactory runContextFactory;
 
     @Test
     void run() throws Exception {
-        RunContext runContext = runContextFactory.of(ImmutableMap.of("variable", "John Doe"));
+        RunContext runContext = runContextFactory.of(ImmutableMap.of("variable", "gengar"));
 
-        Example task = Example.builder()
-            .format("Hello {{ variable }}")
+        Fetch task = Fetch.builder()
+            .pokemon("{{ variable }}")
             .build();
 
-        Example.Output runOutput = task.run(runContext);
-
-        assertThat(runOutput.getChild().getValue(), is(StringUtils.reverse("Hello John Doe")));
+        Fetch.Output runOutput = task.run(runContext);
+        assertThat(runOutput.getBaseExperience(), is(250L));
+        assertThat(runOutput.getHeight(), is(15L));
+        assertThat(runOutput.getAbilities().size(), is(1));
+        assertThat(runOutput.getMoves().size(), is(123));
     }
 }
