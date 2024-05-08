@@ -1,0 +1,10 @@
+id: pokemonFetch
+namespace: io.kestra.plugin
+
+tasks:
+- id: fetch-pikachu
+  type: io.kestra.plugin.pokemon.Fetch
+  pokemon: "pikachu"
+- id: fetch-gengar
+  type: io.kestra.plugin.pokemon.Fetch
+  pokemon: "gengar"
